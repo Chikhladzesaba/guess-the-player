@@ -12,7 +12,7 @@
 <body>
 <main>
   <h1>Guess <em>the Player</em></h1>
-  <p class="intro">One mystery footballer a day. 8 tries. Each guess shows how close you are.</p>
+  <p class="intro">One mystery Premier League player a day. 8 tries. Each guess shows how close you are.</p>
 
   <form id="guess-form" autocomplete="off">
     <input id="guess-input" list="player-list" placeholder="Type a player's name" aria-label="Player name">
@@ -25,7 +25,8 @@
 
   <div id="board" class="board"></div>
 
-  <p class="legend">🟩 match · 🟨 close (same continent, or age within 2) · ⬆️ answer is older · ⬇️ answer is younger</p>
+  <p class="legend">🟩 match · 🟨 close (same continent · age within 2 · joined within 1 year) · ⬆️ the answer's number is higher · ⬇️ lower</p>
+  <p class="legend">Unofficial fan game, not affiliated with the Premier League. Player data: Fantasy Premier League, 2026/27 season (updated around gameweek 6).</p>
 </main>
 <script src="players.js"></script>
 <script src="game.js"></script>
