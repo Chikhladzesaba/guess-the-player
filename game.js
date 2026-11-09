@@ -150,6 +150,14 @@ form.addEventListener("submit", e => {
   render();
 });
 
+// "How to play": open automatically on someone's first visit only
+try {
+  if (!localStorage.getItem("guessplayer:seenHelp")) {
+    document.getElementById("how-to").open = true;
+    localStorage.setItem("guessplayer:seenHelp", "1");
+  }
+} catch (e) {}
+
 // fill the suggestion list
 PLAYERS.forEach(p => {
   const o = document.createElement("option");
