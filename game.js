@@ -1,6 +1,6 @@
 // Guess the Player — game logic
 const MAX_TRIES = 8;
-const STORE_KEY = "guessplayer:state";   // our own key only — never localStorage.clear()
+const STORE_KEY = "guessplayer:v2";      // our own key only — never localStorage.clear()
 const START = new Date(2026, 10, 10);    // day 0 = 10 Nov 2026 (months start at 0)
 
 // ?practice in the address = random player, nothing saved (for testing)
@@ -23,10 +23,12 @@ function dayNumber() {
   const today = new Date(d.getFullYear(), d.getMonth(), d.getDate());
   return Math.round((today - START) / 86400000);
 }
-const n = PLAYERS.length;
-const answer = practice
-  ? PLAYERS[Math.floor(Math.random() * n)]
-  : PLAYERS[((dayNumber() % n) + n) % n];
+// ANSWERS (in players.js) = the players who can be the mystery player, in daily order
+const n = ANSWERS.length;
+const answerName = practice
+  ? ANSWERS[Math.floor(Math.random() * n)]
+  : ANSWERS[((dayNumber() % n) + n) % n];
+const answer = PLAYERS.find(p => p.name === answerName);
 
 // ---------- Saved progress ----------
 function loadState() {
@@ -44,25 +46,45 @@ function saveState() {
 let state = loadState() || { date: todayKey(), guesses: [], done: null };
 
 // ---------- Comparing a guess with the answer ----------
-function age(p) { return new Date().getFullYear() - p.born; }
+// exact age from birth date ("2001-09-05")
+function age(p) {
+  const today = new Date();
+  const [y, m, d] = p.born.split("-").map(Number);
+  let years = today.getFullYear() - y;
+  if (today.getMonth() + 1 < m || (today.getMonth() + 1 === m && today.getDate() < d)) years--;
+  return years;
+}
+
+// a number tile: green if equal, yellow if within `near`, arrow = is the answer higher or lower?
+function numberTile(label, guessValue, answerValue, near) {
+  const diff = answerValue - guessValue;
+  return {
+    label,
+    value: guessValue + (diff > 0 ? " ⬆️" : diff < 0 ? " ⬇️" : ""),
+    status: diff === 0 ? "match" : Math.abs(diff) <= near ? "close" : ""
+  };
+}
 
 function compare(g) {
   const a = answer;
-  const ageDiff = age(a) - age(g);
   return [
     { label: "Nation", value: g.nation,
       status: g.nation === a.nation ? "match" : g.continent === a.continent ? "close" : "" },
-    { label: "League", value: g.league, status: g.league === a.league ? "match" : "" },
     { label: "Club", value: g.club, status: g.club === a.club ? "match" : "" },
     { label: "Pos", value: g.position, status: g.position === a.position ? "match" : "" },
-    { label: "Age", value: age(g) + (ageDiff > 0 ? " ⬆️" : ageDiff < 0 ? " ⬇️" : ""),
-      status: ageDiff === 0 ? "match" : Math.abs(ageDiff) <= 2 ? "close" : "" }
+    numberTile("Age", age(g), age(a), 2),
+    numberTile("Joined", g.joined, a.joined, 1)
   ];
 }
 
+// "Odegaard" finds "Martin Ødegaard": ignore case and accents
+function simplify(s) {
+  return s.normalize("NFD").replace(/[̀-ͯ]/g, "")
+    .replace(/ø/gi, "o").replace(/đ/gi, "d").replace(/ß/g, "ss").toLowerCase().trim();
+}
 function findPlayer(name) {
-  const clean = name.trim().toLowerCase();
-  return PLAYERS.find(p => p.name.toLowerCase() === clean);
+  const clean = simplify(name);
+  return PLAYERS.find(p => simplify(p.name) === clean);
 }
 
 // ---------- Drawing the page ----------
