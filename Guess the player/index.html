@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guess the Player</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+  <h1>Guess <em>the Player</em></h1>
+  <p class="intro">One mystery footballer a day. 8 tries. Each guess shows how close you are.</p>
+
+  <form id="guess-form" autocomplete="off">
+    <input id="guess-input" list="player-list" placeholder="Type a player's name" aria-label="Player name">
+    <datalist id="player-list"></datalist>
+    <button type="submit">Guess</button>
+  </form>
+
+  <p id="message" class="message" role="status"></p>
+  <p id="tries" class="tries"></p>
+
+  <div id="board" class="board"></div>
+
+  <p class="legend">🟩 match · 🟨 close (same continent, or age within 2) · ⬆️ answer is older · ⬇️ answer is younger</p>
+</main>
+<script src="players.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

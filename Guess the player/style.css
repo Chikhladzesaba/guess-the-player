@@ -1,0 +1,110 @@
+:root {
+  --accent: #006aff;
+  --ink: #1a1b22;
+  --muted: #5b6070;
+  --border: #c5dcf0;
+  --bg: #f7fbff;
+  --card: #ffffff;
+  --green: #d9f5e3;
+  --green-ink: #13693a;
+  --yellow: #fff1c2;
+  --yellow-ink: #7a5a00;
+  --grey: #eef0f4;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Inter Tight", system-ui, sans-serif;
+}
+
+main {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 32px 16px 48px;
+}
+
+h1 {
+  font-weight: 400;
+  font-size: 40px;
+  margin: 0 0 8px;
+}
+h1 em {
+  font-family: "Instrument Serif", serif;
+  font-style: italic;
+}
+
+.intro {
+  color: var(--muted);
+  margin: 0 0 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+form {
+  display: flex;
+  gap: 8px;
+}
+input {
+  flex: 1;
+  min-width: 0;
+  font: inherit;
+  font-size: 16px;
+  padding: 12px 16px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--card);
+}
+input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+button {
+  font: inherit;
+  font-weight: 500;
+  padding: 12px 20px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+}
+button:disabled, input:disabled { opacity: 0.5; cursor: default; }
+
+.message { min-height: 1.4em; margin: 16px 0 4px; font-weight: 500; }
+.tries { color: var(--muted); margin: 0 0 16px; font-size: 14px; }
+.message a { color: var(--accent); }
+
+.guess {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 12px;
+  margin-bottom: 10px;
+}
+.guess-name { font-weight: 600; margin-bottom: 8px; }
+
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+}
+.tile {
+  border-radius: 10px;
+  padding: 8px 4px;
+  text-align: center;
+  background: var(--grey);
+  font-size: 13px;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+.tile small {
+  display: block;
+  font-size: 11px;
+  color: var(--muted);
+  margin-bottom: 2px;
+}
+.tile.match { background: var(--green); color: var(--green-ink); }
+.tile.close { background: var(--yellow); color: var(--yellow-ink); }
+
+.legend { color: var(--muted); font-size: 13px; margin-top: 24px; }
