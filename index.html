@@ -14,6 +14,29 @@
   <h1>Guess <em>the Player</em></h1>
   <p class="intro">One mystery Premier League player a day. 8 tries. Each guess shows how close you are.</p>
 
+  <details id="how-to" class="how-to">
+    <summary>How to play</summary>
+    <ol>
+      <li>There's one <strong>secret Premier League player</strong> today — the same for everyone.</li>
+      <li>Type <strong>any</strong> Premier League player as your guess. Your first guess is a shot in the dark.</li>
+      <li>Each guess shows how it compares with the secret player:</li>
+    </ol>
+    <div class="example">
+      <div class="tile match"><small>Nation</small>England</div>
+      <div class="tile"><small>Club</small>Arsenal</div>
+      <div class="tile match"><small>Pos</small>MF</div>
+      <div class="tile close"><small>Age</small>27 ⬇️</div>
+      <div class="tile"><small>Joined</small>2023 ⬆️</div>
+    </div>
+    <ul class="key">
+      <li><span class="dot match"></span><strong>Green</strong> — same as the secret player. Here: he's an English midfielder.</li>
+      <li><span class="dot close"></span><strong>Yellow</strong> — close. Nation: same continent. Age: within 2 years. Joined: within 1 year.</li>
+      <li><span class="dot"></span><strong>Grey</strong> — not the same, not close. Here: he doesn't play for Arsenal.</li>
+      <li>⬆️ ⬇️ — the secret player's number is <strong>higher / lower</strong> than your guess. Here: age 27 ⬇️ in yellow means he's 25 or 26. Joined 2023 ⬆️ in grey means he joined in 2025 or later.</li>
+    </ul>
+    <p>Use the clues to narrow it down. Find him in <strong>8 guesses</strong>. New player every day.</p>
+  </details>
+
   <form id="guess-form" autocomplete="off">
     <input id="guess-input" list="player-list" placeholder="Type a player's name" aria-label="Player name">
     <datalist id="player-list"></datalist>
